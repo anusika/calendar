@@ -24,4 +24,6 @@ Built because I wanted to learn how to use Flask
 
 # Pictures!
 
-![alt text](https://github.com/anusika/calendar/blob/main/pictures/delete.JPG?raw=true)
+![Delete](https://github.com/anusika/calendar/blob/main/pictures/delete.JPG?raw=true)
+![Add](https://github.com/anusika/calendar/blob/main/pictures/add.JPG?raw=true)
+![Home Page](https://github.com/anusika/calendar/blob/main/pictures/overall.JPG?raw=true)
