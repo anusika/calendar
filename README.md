@@ -1,9 +1,27 @@
-# Calendar Using Canvas API
+# Assignments Calendar Using Canvas API
 
-#Features
+# Description
+
+A personalized assignment tracker!
+Built because I wanted to learn how to use Flask
 
 
-#To-do
+* Built using:
+  * Canvas API (https://github.com/ucfopen/canvasapi)
+  * Flask
+  
 
+# Features
+* Import assignments from Canvas
+* Add new assignments
+* Delete assigments
+* Switch status of completed or not completed
+* Moves completed assignments to bottom of page (greyed out)
 
-#Pictures!
+# To-do
+* option to edit exisiting entry
+* add comments
+
+# Pictures!
+
+![alt text](https://github.com/[anusika]/[calendar]/blob/main/pictures/delete.jpg?raw=true)
