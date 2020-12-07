@@ -1,0 +1,30 @@
+.False {
+    font-weight: 100;
+}
+
+.True {
+    color: #d1d1e0;
+}
+
+.header{
+    display: flex
+}
+
+.flex-item {
+    padding:1em;
+    margin: 1em;
+}
+
+.middle {
+    border-radius: 0 !important;
+}
+
+.left {
+    border-bottom-right-radius: 0 !important;
+    border-top-right-radius: 0 !important;
+}
+
+.right {
+    border-bottom-left-radius: 0 !important;
+    border-top-left-radius: 0 !important;
+}
