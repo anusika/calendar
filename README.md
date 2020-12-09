@@ -9,6 +9,7 @@ Built because I wanted to learn how to use Flask
 * Built using:
   * Canvas API (https://github.com/ucfopen/canvasapi)
   * Flask
+  * SQLite database
   
 
 # Features
@@ -17,10 +18,12 @@ Built because I wanted to learn how to use Flask
 * Delete assigments
 * Switch status of completed or not completed
 * Moves completed assignments to bottom of page (greyed out)
+* option to edit exisiting entry
 
 # To-do
-* option to edit exisiting entry
 * add comments
+* option to track assigment specific to-dos
+* option to track how much of assigment is completed
 
 # Pictures!
 
