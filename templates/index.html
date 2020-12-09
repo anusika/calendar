@@ -1,4 +1,4 @@
-<!doctype html>
+                                                                                                                                                                                                                                                                             <!doctype html>
 <html>
   <head>
         <!-- Latest compiled and minified CSS -->
@@ -64,13 +64,11 @@
           {% endif %}
           </button>
         </form>
-        <form action = "/toggle/" method = "post">
-          <button name = "{{line[3]}}" value = "{{line[6]}}" class = "middle btn {{"btn-primary" if not line[6] else "btn-light"}}"> Edit </button>
-        </form>
-        <form action = "/delete/" method = "post">
+          <button type = "button" class = "middle btn {{"btn-primary" if not line[6] else "btn-light"}}" data-toggle="modal" data-target = "#editModal"
+          data-courseCode = "{{line[1]}}" data-courseName = "{{line[0]}}" data-assigmentName = "{{line[2]}}" data-due="{{line[4]}}" data-points="{{line[5]}}"
+          data-assigmentId = "{{line[3]}}" data-submitted = "{{line[6]}}"> Edit </button>
           <button type="button" class = "right btn {{"btn-danger" if not line[6] else "btn-light"}}" data-toggle="modal" data-target = "#deleteModal" data-id="{{line[3]}}" data-name="{{line[2]}}"> 
             Delete </button>
-        </form>
       </td>
     <tr>
     {% endfor %}
@@ -143,6 +141,51 @@
   </div>
 </div>
 
+
+<!-- Modal -->
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Edit Assigment</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form action="/edit/" method = "post">
+          <div class = "form-group">
+          <label for="courseCode">Course Name</label>
+          <select name = "courseCode" class="form-control" id="courseCode" selected="courses[0]">
+            {% for line in courses.keys() %}
+            <option value = "{{courses[line]}}">{{line}}</option>
+            {% endfor %}
+          </select>
+        </div>
+
+        <div class="form-group">
+        <label for="assigmentName">Assigment Name:</label><br>
+        <input type="text" id="assigmentName" name="assigmentName" class = "form-control" value = "default">
+        </div>
+
+        <div class="form-group">
+          <label for="dueDate">Due Date:</label> <br>
+          <input type="datetime-local" id="dueDate" name="dueDate" class = "form-control">
+        </div>
+
+        <div class="form-group">
+          <label for="points">Points:</label> <br>
+          <input type="number" id="points" name="points" value = "1"  class = "form-control">
+        </div>
+          <input type="hidden" name="submitStatus" id = "submitStatus" value="default">
+          <button type="submit" class="btn btn-primary" id = "assigmentId" name = "assigmentId" value = "example"> Submit </button>
+          </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
 <script>
   $('#deleteModal').on('show.bs.modal', function (event) {
   var button = $(event.relatedTarget) // Button that triggered the modal
@@ -154,6 +197,29 @@
   modal.find('.assigmentName').text(name)
   modal.find('.assigmentId').text(id)
   document.getElementById("toDelete").value = id;
+})
+
+$('#editModal').on('show.bs.modal', function (event) {
+  var button = $(event.relatedTarget) // Button that triggered the modal
+  var courseCode = button.data('coursecode')
+  var courseName = button.data('coursename')
+  var assigmentName = button.data('assigmentname')
+  var due = new Date(button.data("due"))
+  var points = button.data("points")
+  var id = button.data("assigmentid")
+  var submitted = button.data("submitted")
+
+  due = due.toString().split('GMT')
+  due = new Date(due.toString().split('GMT')[0]+' UTC').toISOString().split('.')[0]
+  // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+  // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+  var modal = $(this)
+  modal.find('#points').val(points);
+  modal.find("#courseCode").val(courseCode).change();
+  modal.find("#assigmentName").val(assigmentName).change();
+  modal.find("#dueDate").val(due).change();
+  modal.find("#submitStatus").val(submitted).change();
+  document.getElementById("assigmentId").value = id;
 })
 </script>
 </body>

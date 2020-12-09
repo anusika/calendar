@@ -36,6 +36,17 @@ def insert_assigment(connection, assignment):
     connection.commit()
 
 
+def edit_assigment(connection, assignment):
+    
+    cmdReplace = """ REPLACE INTO assignments(courseName, courseId, assignmentName, assigmentId, dueDate, points, submitted)
+    VALUES(?, ?, ?, ?, ?, ?, ?)"""
+    
+    cur = connection.cursor()
+    cur.execute(cmdReplace, assignment)
+    connection.commit()
+
+
+
 def reloadA(connection):
     canvas = create_canvas()
 
