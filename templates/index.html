@@ -11,6 +11,11 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
     <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/styles.css') }}">
+    
+    <script type=text/javascript>
+      $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+    </script>
+    
     <title>Assignment Organizer</title>
   </head>
 
@@ -67,16 +72,16 @@
           <button type = "button" class = "middle btn {{"btn-primary" if not line[6] else "btn-light"}}" data-toggle="modal" data-target = "#editModal"
           data-courseCode = "{{line[1]}}" data-courseName = "{{line[0]}}" data-assignmentName = "{{line[2]}}" data-due="{{line[4]}}" data-points="{{line[5]}}"
           data-assignmentId = "{{line[3]}}" data-submitted = "{{line[6]}}"> Edit </button>
-          <form>
-          <button type = "button" class = "middle btn {{"btn-primary" if not line[6] else "btn-light"}} "> Tasks </button>
-          </form>
-          <button type="button" class = "right btn {{"btn-danger" if not line[6] else "btn-light"}}" data-toggle="modal" data-target = "#deleteModal" data-id="{{line[3]}}" data-name="{{line[2]}}"> 
+          <button type = "button" data-id = "{{line[3]}}" class = "tasks-btn middle btn {{"btn-primary" if not line[6] else "btn-light"}} "> Tasks </button>
+          <button type="button"  class = "right btn {{"btn-danger" if not line[6] else "btn-light"}}" data-toggle="modal" data-target = "#deleteModal" data-id="{{line[3]}}" data-name="{{line[2]}}"> 
             Delete </button>
       </td>
     <tr>
     {% endfor %}
     </table>
 
+    <table class = "table" id = "tasks">
+      </table>
 
 
 <!-- Modal -->
@@ -182,50 +187,7 @@
   </div>
 </div>
 
+<script type="text/javascript" src="{{ url_for('static', filename='modals.js') }}"></script>
 
-<script>
-  $('#deleteModal').on('show.bs.modal', function (event) {
-  var button = $(event.relatedTarget) // Button that triggered the modal
-  var name = button.data('name') // Extract info from data-* attributes
-  var id = button.data('id')
-  // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
-  // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
-  var modal = $(this)
-  modal.find('.assignmentName').text(name)
-  modal.find('.assignmentId').text(id)
-  document.getElementById("toDelete").value = id;
-})
-
-$('#editModal').on('show.bs.modal', function (event) {
-  var button = $(event.relatedTarget) // Button that triggered the modal
-  var courseCode = button.data('coursecode')
-  var courseName = button.data('coursename')
-  var assignmentName = button.data('assignmentname')
-  var due = button.data("due")
-  var points = button.data("points")
-  var id = button.data("assignmentid")
-  var submitted = button.data("submitted")
-  console.log(due)
-
-  if (due == "None") {
-      due = new Date()
-  }
-
-  else {
-    due = new Date(due)
-    due = due.toString().split('GMT')
-    due = new Date(due.toString().split('GMT')[0]+' UTC').toISOString().split('.')[0]
-  }
-
-
-  var modal = $(this)
-  modal.find('#points').val(points);
-  modal.find("#courseCode").val(courseCode).change();
-  modal.find("#assignmentName").val(assignmentName).change();
-  modal.find("#dueDate").val(due).change();
-  modal.find("#submitStatus").val(submitted).change();
-  document.getElementById("assignmentId").value = id;
-})
-</script>
 </body>
 </html>

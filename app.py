@@ -1,15 +1,26 @@
 import os
 import sqlite3
-from flask import Flask, request, render_template, url_for
+from flask import Flask, request, render_template, url_for, jsonify
 from getAssignments import get_assignments,  updateAssignment, delete_assignmnent
 from insertAssignments import reloadA, databaseFile, courses, insert_assignment, edit_assignment
 from createTable import create_connection
+from tasks import getTasks
 import random
 import datetime
 
 app = Flask(__name__)
 
 assignments = []
+
+@app.route('/_findtasks')
+def find_tasks():
+    connection = create_connection(databaseFile)
+    aid = request.args.get('assignmentId', 0, type=int)
+    tasksFound = getTasks(connection, aid)
+    print(tasksFound)
+    connection.close()
+    return jsonify(tasks = tasksFound)
+
 
 @app.route('/')
 def hello_world():
