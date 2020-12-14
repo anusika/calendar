@@ -94,7 +94,6 @@ def edit():
     points = data.get("points")
     submitted = data.get("submitStatus")
     assignmentId = data.get('assignmentId')
-    print(dueDate)
     try:
         dueDate= datetime.datetime.strptime(dueDate, "%Y-%m-%dT%H:%M:%S")
     except:
