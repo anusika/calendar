@@ -2,7 +2,7 @@ import os
 import sqlite3
 from flask import Flask, request, render_template, url_for
 from getAssignments import get_assignments,  updateAssignment, delete_assignmnent
-from insertAssignments import reloadA, databaseFile, courses, insert_assigment, edit_assigment
+from insertAssignments import reloadA, databaseFile, courses, insert_assignment, edit_assignment
 from createTable import create_connection
 import random
 import datetime
@@ -45,11 +45,11 @@ def toggle():
 def addAssignment():
     data = request.form
     courseCode = data.get("courseCode")
-    assigmentName = data.get("assigmentName")
+    assignmentName = data.get("assignmentName")
     dueDate = data.get("dueDate")
     points = data.get("points")
     submitted = 0
-    assigmentId = random.randint(1000,9999)
+    assignmentId = random.randint(1000,9999)
 
     dueDate= datetime.datetime.strptime(dueDate, "%Y-%m-%dT%H:%M")
     dueDate = dueDate.strftime('%Y-%m-%d %H:%M:00')
@@ -60,7 +60,7 @@ def addAssignment():
 
     connection = create_connection(databaseFile)
 
-    insert_assigment(connection, [courseName, int(courseCode), assigmentName, int(assigmentId), dueDate, int(points), submitted])
+    insert_assignment(connection, [courseName, int(courseCode), assignmentName, int(assignmentId), dueDate, int(points), submitted])
     
     global assignments
     assignments = get_assignments(connection)
@@ -89,11 +89,11 @@ def edit():
     data = request.form
 
     courseCode = data.get("courseCode")
-    assigmentName = data.get("assigmentName")
+    assignmentName = data.get("assignmentName")
     dueDate = data.get("dueDate")
     points = data.get("points")
     submitted = data.get("submitStatus")
-    assigmentId = data.get('assigmentId')
+    assignmentId = data.get('assignmentId')
     print(dueDate)
     try:
         dueDate= datetime.datetime.strptime(dueDate, "%Y-%m-%dT%H:%M:%S")
@@ -106,8 +106,7 @@ def edit():
         if courses[course] == int(courseCode):
             courseName = course
 
-    print([courseName, int(courseCode), assigmentName, int(assigmentId), dueDate, int(points), submitted])
-    edit_assigment(connection, [courseName, int(courseCode), assigmentName, int(assigmentId), dueDate, int(points), int(submitted)])
+    edit_assignment(connection, [courseName, int(courseCode), assignmentName, int(assignmentId), dueDate, int(points), int(submitted)])
     
     global assignments
     assignments = get_assignments(connection)

@@ -14,7 +14,7 @@ def updateAssignment(connection, assignment, value):
     cmdUpdate = """
     UPDATE assignments
     SET submitted = ?
-     WHERE assigmentId = ?"""
+     WHERE assignmentId = ?"""
     cur = connection.cursor()
 
     if value == "1":
@@ -25,13 +25,13 @@ def updateAssignment(connection, assignment, value):
     cur.execute(cmdUpdate, [value, assignment])
     connection.commit()
 
-    cmdGet = "SELECT * FROM assignments WHERE assigmentId = ?;"
+    cmdGet = "SELECT * FROM assignments WHERE assignmentId = ?;"
     cur.execute(cmdGet, [assignment])
 
 
-def delete_assignmnent(connection, assigmentId):
+def delete_assignmnent(connection, assignmentId):
 
-    cmdDelete = "DELETE FROM assignments WHERE assigmentId = ?;"
+    cmdDelete = "DELETE FROM assignments WHERE assignmentId = ?;"
     cur = connection.cursor()
-    cur.execute(cmdDelete, [assigmentId])
+    cur.execute(cmdDelete, [assignmentId])
     connection.commit()

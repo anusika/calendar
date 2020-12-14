@@ -15,13 +15,13 @@ def create_canvas():
 
     return canvas
 
-def insert_assigment(connection, assignment):
+def insert_assignment(connection, assignment):
     
-    cmdcheckExists = " SELECT * from assignments WHERE assigmentId = ?"
+    cmdcheckExists = " SELECT * from assignments WHERE assignmentId = ?"
 
-    cmdUpdate = "UPDATE assignments SET dueDate = ? WHERE assigmentId = ?"
+    cmdUpdate = "UPDATE assignments SET dueDate = ? WHERE assignmentId = ?"
 
-    cmdInsert = """ INSERT INTO assignments(courseName, courseId, assignmentName, assigmentId, dueDate, points, submitted)
+    cmdInsert = """ INSERT INTO assignments(courseName, courseId, assignmentName, assignmentId, dueDate, points, submitted)
     VALUES(?, ?, ?, ?, ?, ?, ?)"""
     
     cur = connection.cursor()
@@ -36,9 +36,9 @@ def insert_assigment(connection, assignment):
     connection.commit()
 
 
-def edit_assigment(connection, assignment):
+def edit_assignment(connection, assignment):
     
-    cmdReplace = """ REPLACE INTO assignments(courseName, courseId, assignmentName, assigmentId, dueDate, points, submitted)
+    cmdReplace = """ REPLACE INTO assignments(courseName, courseId, assignmentName, assignmentId, dueDate, points, submitted)
     VALUES(?, ?, ?, ?, ?, ?, ?)"""
     
     cur = connection.cursor()
@@ -70,4 +70,4 @@ def reloadA(connection):
                 iso = (dt.datetime.fromisoformat(due).replace(tzinfo=pytz.UTC))
                 time = iso.astimezone(pytz.timezone('US/Pacific')).strftime('%Y-%m-%d %H:%M:00')
                 due_at = time
-            insert_assigment(connection, (courseName, courseId, name, aid, due_at, points, submitted))
+            insert_assignment(connection, (courseName, courseId, name, aid, due_at, points, submitted))
